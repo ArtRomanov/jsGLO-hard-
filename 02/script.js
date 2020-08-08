@@ -9,7 +9,8 @@ for (let i=0; i<arr.length;i++){
 console.log(prod);
 // Полученный результат возвести в степень 3, используя только 1 оператор
 let rise = prod ** 3;
+console.log(rise);
 //Вывести на экран первые 2 цифры полученного числа
-let new1 = rise.toString().split('');
-alert(new1[0]); 
-alert(new1[1]);
+let new1 = rise.toString();
+alert(new1.substr(0, 2)); 
+//alert(new1[1]);
