@@ -288,8 +288,7 @@ const calc=(price=100)=>{
     calcDay = document.querySelector('.calc-day'),
     calcCount = document.querySelector('.calc-count'),
     totalValue = document.getElementById('total');
-    let reqFunc;
-
+    
     const countSum = () =>{
         let total = 0,
         countValue = 1,
@@ -312,41 +311,52 @@ const calc=(price=100)=>{
             total = Math.ceil(price*typeValue*squareValue*countValue*dayValue);
 
         }
-        modalAnimation(totalValue, total, totalValue.textContent);
+
+        animate({duration: 300, //скорость воспроизведения анимации
+            
+            timing(timeFraction) {
+                
+                return timeFraction;//рассчёт времени
+            },
+
+            draw(progress) {
+
+                totalValue.textContent = Math.floor(progress * total); //вывод на страницу
+            }
+        });
     };
 
     calcBlock.addEventListener('change', (event)=>{
         const target = event.target;
 
         if(target.matches('select')||target.matches('input')){
-            cancelAnimationFrame(reqFunc);
-            countSum();
-            
+        
+            countSum(); 
         }
-
-
     });
 
-    const modalAnimation = (totlValue,total,initialValue)=>{
-        function newAnimation () {
-            totlValue.textContent = initialValue;
-            if(initialValue<total){
-                initialValue++;
-                if(initialValue<=total){ 
-                        reqFunc = requestAnimationFrame(newAnimation);
-                }
-            } else if(initialValue>total){
-                initialValue--;
-                if(initialValue>=total){
-                    reqFunc = requestAnimationFrame(newAnimation);
-                }
-            }
+    // функция запуска анимации 
+    function animate({ duration, draw, timing }) {
+
+    let start = performance.now();//время в м.с. с момента загрузки страницы
+
+    requestAnimationFrame(function animate(time) {
+
+        let timeFraction = (time - start) / duration;
+
+        if (timeFraction > 1){
+            timeFraction = 1;
         }
-    newAnimation();
-    };
+        let progress = timing(timeFraction);
+
+        draw(progress);
+
+        if (timeFraction < 1) {
+            requestAnimationFrame(animate);
+        }
+
+    });
+    }
 };
 calc(100);
 });
-
-
-
