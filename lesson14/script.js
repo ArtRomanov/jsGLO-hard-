@@ -21,21 +21,23 @@ const getRandomColor = () => {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-}
+};
 
 
 DomElement.prototype.method=function(){
         if(this.selector.startsWith('.')){
             
             elementDiv.className=this.selector.substring(1);
-            elementDiv.style.cssText=`position:absolute; top: ` + this.top + `px; height:`+ this.height +
+            elementDiv.style.cssText=`position:absolute; top: ` + this.top + `px;left: ` + this.left +
+             `px; height:`+ this.height +
              `px; width:`+ this.width+`px; background-color:`+ this.bg + `; font-size: `+this.fontSize+`px;`;
             elementDiv.textContent=this.selector.substring(1);
             doc.append(elementDiv);
             
         }else if(this.selector.startsWith('#')){
             elementParag.setAttribute('id',this.selector.substring(1));
-            elementParag.style.cssText=` position:absolute; top: ` + this.top + `px; left: ` + this.left + `px;height:`+ this.height +
+            elementParag.style.cssText=` position:absolute; top: ` + this.top + `px; left: `+ this.left +
+             `px;height:`+this.height + 
              `px; width:`+ this.width+`px; background-color:`+ this.bg + `; font-size: `+this.fontSize+`px;`;
             elementParag.textContent=this.selector.substring(1);
             doc.append(elementParag);
